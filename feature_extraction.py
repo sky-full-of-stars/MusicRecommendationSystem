@@ -9,25 +9,24 @@ source :
 
 from __future__ import print_function
 import librosa
+import numpy as np
 
 # 1. Get the file path to the included audio example
 filename = librosa.util.example_audio_file()
-
+print(filename)
 # 2. Load the audio as a waveform `y`
 #    Store the sampling rate as `sr`
 y, sr = librosa.load(filename)
 y = librosa.effects.harmonic(y)
-tonnetz = librosa.feature.tonnetz(y=y, sr=sr)
-#print("tonnetz: ",tonnetz)
 
 import soundfile as sf
-
+"""
 X, sample_rate = sf.read(filename, dtype='float32')
 if X.ndim > 1:
         X = X[:,0]
         X = X.T
         
-import numpy as np
+"""
 
 tonnetz = np.mean(librosa.feature.tonnetz(y=y, sr=sr))
 print("tonnetz: ", tonnetz)
