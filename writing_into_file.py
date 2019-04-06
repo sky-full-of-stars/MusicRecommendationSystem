@@ -62,10 +62,10 @@ def init_file():
 
 #4th part
 #writing data into file
-def write(songname,tonnetz,mfccs,chroma,mel,contrast):
+def write(filename,songname,tonnetz,mfccs,chroma,mel,contrast):
     print("inside write")
     to_append = f'{songname} {tonnetz} {mfccs} {chroma} {mel} {contrast} '
-    file = open('data.csv', 'a', newline='')
+    file = open(filename, 'a', newline='')
     with file:
         writer = csv.writer(file)
         writer.writerow(to_append.split())
