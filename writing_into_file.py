@@ -1,10 +1,7 @@
-
 """
 Created on Sat Mar  2 14:03:46 2019
-
 @author: Akshay
 aim: everything before kmeans
-
 """
 #1st part
 #imports and similar stuff
@@ -62,13 +59,13 @@ def init_file():
 
 #4th part
 #writing data into file
-def write(songname,tonnetz,mfccs,chroma,mel,contrast,file):
+def write(filename,songname,tonnetz,mfccs,chroma,mel,contrast):
     print("inside write")
     to_append = f'{songname} {tonnetz} {mfccs} {chroma} {mel} {contrast} '
+    file = open(filename, 'a', newline='')
     with file:
         writer = csv.writer(file)
         writer.writerow(to_append.split())
-    
         
 
 
@@ -78,8 +75,7 @@ def write(songname,tonnetz,mfccs,chroma,mel,contrast,file):
 #extract their features (fun call)
 #write features to file (fun call)
 def process_songs():
-    directory="C:/Users/admin/Desktop/dataset"
-    file = open('data.csv', 'a', newline='')
+    directory="C:/Users/Akshay/Desktop/dataset"
     for songs in listdir(directory):
        x="/";
        path=directory+x+songs
@@ -89,10 +85,34 @@ def process_songs():
            continue;
        y = librosa.effects.harmonic(y)
        tonnetz,mfccs,chroma,mel,contrast = features(y,sr)
-       write(songs,tonnetz,mfccs,chroma,mel,contrast,file)
+       write(songs,tonnetz,mfccs,chroma,mel,contrast)
     print("1st dir done");
-    file.close()
     
+    directory="E:/Songs/mySongs"
+    for songs in listdir(directory):
+       x="/";
+       path=directory+x+songs
+       print(path);
+       y, sr = librosa.load(path)
+       if(y.size==0):
+           continue;
+       y = librosa.effects.harmonic(y)
+       tonnetz,mfccs,chroma,mel,contrast = features(y,sr)
+       write(songs,tonnetz,mfccs,chroma,mel,contrast)
+    print("2nd dir done");
+    
+    directory="E:/Songs/MakesYouHappy"
+    for songs in listdir(directory):
+       x="/";
+       path=directory+x+songs
+       print(path);
+       y, sr = librosa.load(path)
+       if(y.size==0):
+           continue;
+       y = librosa.effects.harmonic(y)
+       tonnetz,mfccs,chroma,mel,contrast = features(y,sr)
+       write(songs,tonnetz,mfccs,chroma,mel,contrast)
+    print("3rd dir done"); 
        
 
 
@@ -113,7 +133,3 @@ main()
 
 
 #print(tonnetz)
-
-
-
- 
