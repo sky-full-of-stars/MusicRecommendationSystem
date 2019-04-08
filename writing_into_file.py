@@ -78,7 +78,8 @@ def write(filename,songname,tonnetz,mfccs,chroma,mel,contrast):
 #extract their features (fun call)
 #write features to file (fun call)
 def process_songs():
-    directory="C:/Users/Akshay/Desktop/dataset"
+    #directory="C:/Users/Akshay/Desktop/dataset"
+    directory="C:/Users/asuryana/MusicRecommendationSystem"
     for songs in listdir(directory):
        x="/";
        path=directory+x+songs

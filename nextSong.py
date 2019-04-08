@@ -4,9 +4,12 @@ written in sublime
 didnt even complile
 contains complete implementation of recomendation of next song part
 """
-
+from __future__ import print_function
+import librosa
+import math
+from writing_into_file import write,features
 def distance(p1,p2,p3,p4,p5,a1,a2,a3,a4,a5):
-	return sqrt(
+	return math.sqrt(
 				(p1-a1)**2+(p2-a2)**2+(p3-a3)**2+(p4-a4)**2+(p5-a5)**2
 				)
 
@@ -38,15 +41,16 @@ def nextSongRecommendationModule():
 			f4 =df.mel
 			f5 =df.contrast
 			minimum=1000000000;
+			nearestSong="new song";
 			for (songname,v1,v2,v3,v4,v5) in zip(name,f1,f2,f3,f4,f5):
 				dist=distance(a,b,c,d,e,v1,v2,v3,v4,v5)
-				if(dist<min):
-					min = dist
+				if(dist<minimum):
+					minimum = dist
 					nearestSong=songname
 
-			print(neartestSong)
+			print(nearestSong)
 		else:
-			df = pd.read_csv(centroid.csv")
+			df = pd.read_csv("centroid.csv")
 			id=df.cluster_number
 			f1 = df.tonnetz
 			f2 =df.mfccs
@@ -54,12 +58,13 @@ def nextSongRecommendationModule():
 			f4 =df.mel
 			f5 =df.contrast
 			minimum=10000000000;
+			clusterSongBelongsTo=0;
 			for (clusterId,c1,c2,c3,c4,c5) in zip(id,f1,f2,f3,f4,f5):
 				dist=distance(c1,c2,c3,c4,c5,v1,v2,v3,v4,v5)
-				if(dist<min):
-					min=dist
+				if(dist<minimum):
+					minimum=dist
 					clusterSongBelongsTo=clusterId
 
 			print("song belongs to", clusterSongBelongsTo)
-			write(data.csv,newSong,a,b,c,d,e)
-			write("cluster"+clusterSongBelongsTo+".csv"+,newSong,a,b,c,d,e)
+			write("data.csv",newSong,a,b,c,d,e)
+			write("cluster"+clusterSongBelongsTo+".csv",newSong,a,b,c,d,e)
