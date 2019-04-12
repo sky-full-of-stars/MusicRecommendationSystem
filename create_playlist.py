@@ -60,7 +60,7 @@ def create_playlists(avg,count,user_genres,total_songs):
     return playlists
         
 playlists = create_playlists([[0.012259049,5.116299589,0.521716511,10.1420707,25.12118952]],[19],[0],19)
-print(len(playlists[0]))
+
             
         
         
