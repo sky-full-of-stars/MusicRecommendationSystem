@@ -46,7 +46,7 @@ def nextSongRecommendationModule():
 
 			print(neartestSong)
 		else:
-			df = pd.read_csv(centroid.csv")
+			df = pd.read_csv("centroid.csv")
 			id=df.cluster_number
 			f1 = df.tonnetz
 			f2 =df.mfccs
@@ -62,4 +62,4 @@ def nextSongRecommendationModule():
 
 			print("song belongs to", clusterSongBelongsTo)
 			write(data.csv,newSong,a,b,c,d,e)
-			write("cluster"+clusterSongBelongsTo+".csv"+,newSong,a,b,c,d,e)
+			write("cluster"+clusterSongBelongsTo+".csv",newSong,a,b,c,d,e)
