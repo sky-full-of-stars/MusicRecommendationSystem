@@ -10,6 +10,7 @@ def distance(p1,p2,p3,p4,p5,a1,a2,a3,a4,a5):
 				(p1-a1)**2+(p2-a2)**2+(p3-a3)**2+(p4-a4)**2+(p5-a5)**2
 				)
 
+countOfNewSongs = 0 
 def nextSongRecommendationModule():
 	#s=Set()
 	hashmap={}
@@ -39,6 +40,8 @@ def nextSongRecommendationModule():
 			f5 =df.contrast
 			minimum=1000000000;
 			for (songname,v1,v2,v3,v4,v5) in zip(name,f1,f2,f3,f4,f5):
+				if(newSong == songName):
+                	pass
 				dist=distance(a,b,c,d,e,v1,v2,v3,v4,v5)
 				if(dist<min):
 					min = dist
@@ -46,6 +49,7 @@ def nextSongRecommendationModule():
 
 			print(neartestSong)
 		else:
+			countOfNewSongs=countOfNewSongs+1;
 			df = pd.read_csv("centroid.csv")
 			id=df.cluster_number
 			f1 = df.tonnetz
