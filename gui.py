@@ -124,7 +124,14 @@ def search_text():
         Lb1.delete(0, END)
         playlist_init()
         for song in playlist:
-            Lb1.insert(index,os.path.basename(song))
+            if song in "C:/Users/admin/Desktop/dataset/desktop.ini":
+                continue
+            try:
+                audio = EasyID3(song)
+            except mutagen.id3.ID3NoHeaderError:
+                audio = mutagen.File(file, easy=True)
+                audio.add_tags()
+            Lb1.insert(index,audio["title"])
             index+=1
         tkinter.messagebox.showinfo('No text entered')
         #listbox_init()
@@ -132,8 +139,17 @@ def search_text():
         Lb1.delete(0, END)
         word=searchText.get()
         for song in playlist:
-            if word in song:
-                Lb1.insert(index,os.path.basename(song))
+            if song in "C:/Users/admin/Desktop/dataset/desktop.ini":
+                continue
+            try:
+                audio = EasyID3(song)
+            except mutagen.id3.ID3NoHeaderError:
+                audio = mutagen.File(file, easy=True)
+                audio.add_tags()
+            songtitle = audio["title"]
+            print(str(songtitle))
+            if word in str(songtitle):
+                Lb1.insert(index,songtitle)
                 temp.insert(index,song)
                 index+=1
         playlist[:]=[]
