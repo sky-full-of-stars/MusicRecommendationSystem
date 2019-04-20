@@ -4,6 +4,8 @@
 import csv
 import pandas as pd
 df = pd.read_csv("centroid.csv")
+df=df.copy()
+
 print(df)
 pd.options.mode.chained_assignment = None 
 hashmap={}
@@ -23,8 +25,10 @@ for i in range(0,7):
 for i in range(1,7):
 	#update i+1th row in csv file with hashmap[i]
 	#for the column numOfSongs
-	#df.set_value(i+1, "numOfSongs", hashmap[i])
-	df.iloc[i][6] =      hashmap[i-1]
+	#df.set_value(i+1, "numOfSongs", hashmap[i]
+    #print(df.iloc[0][6])
+    df.iloc[i, df.columns.get_loc('numOfSongs')] = hashmap[i]
+	
     
     
 print(df)
