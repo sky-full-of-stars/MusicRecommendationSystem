@@ -11,52 +11,39 @@ import math
 import IPython.display as ipd
 import pandas as pd
 import numpy as np
+import os
 
-file='C:/Users/admin/Desktop/songs/'
-
-nameOfSong="000005.mp3"            
-audio_path = file+nameOfSong
-x , sr = librosa.load(audio_path)
-ipd.Audio(audio_path)
-hashmap={}
+file='C:/Users/admin/Desktop/dataset/'
 
 def distance(p1,p2,p3,p4,p5,a1,a2,a3,a4,a5):
 	return math.sqrt(
                 (p1-a1)**2+(p2-a2)**2+(p3-a3)**2+(p4-a4)**2+(p5-a5)**2
                 )
 
-def nextSongRecommendationModule(newSong):
-    csv_file_name="cluster"+hashmap[newSong]+".csv"
-    df = pd.read_csv(csv_file_name)
-    songs=df.filename;
-    #will fail for cluster11.csv BEWARE
-    clusterId=csv_file_name[7]
-    for songName in songs:
-        #s.add( ("songName",clusterId) )
-        hashmap[songName]=clusterId
-    #if s.contains(newSong):
-    y, sr = librosa.load(newSong)
+def nextSongRecommendationModule(current_song,hashmap):
+    newSong=current_song
+    newSong=os.path.basename(newSong)
+    y, sr = librosa.load('C:/Users/admin/Desktop/dataset/'+newSong)
     [a,b,c,d,e]=features(y,sr)
-    if newSong in hashmap:
-        clusterId= hashmap[newSong]
-        df = pd.read_csv("cluster"+clusterId+".csv")
-        name=df.filename
-        f1 = df.tonnetz
-        f2 =df.mfcc
-        f3=df.chroma
-        f4 =df.mel
-        f5 =df.contrast
-        minimum=1000000000;
-        nearestSong="new song";
-        for (songname,v1,v2,v3,v4,v5) in zip(name,f1,f2,f3,f4,f5):
-            dist=distance(a,b,c,d,e,v1,v2,v3,v4,v5)
-            if(dist<minimum):
-                minimum = dist
-                nearestSong=songname
-        print("the next song is"+nearestSong)
-    audio_path1 = file+nearestSong
-    x , sr = librosa.load(audio_path1)
-    ipd.Audio(audio_path1)
+    clusterId= hashmap[newSong]
+    print("the path is yoooooo"+newSong)
+    df = pd.read_csv("cluster"+clusterId+".csv")
+    name=df.filename
+    f1 = df.tonnetz
+    f2 =df.mfcc
+    f3=df.chroma
+    f4 =df.mel
+    f5 =df.contrast
+    minimum=1000000000;
+    nearestSong="new song";
+    for (songname,v1,v2,v3,v4,v5) in zip(name,f1,f2,f3,f4,f5):
+        dist=distance(a,b,c,d,e,v1,v2,v3,v4,v5)
+        if(dist<minimum):
+            minimum = dist
+            nearestSong=songname
+    print("the next song is"+nearestSong)
+    current_song='C:/Users/admin/Desktop/dataset/'+nearestSong
+    return current_song
             
 def features(y,sr):
     print("inside features")
@@ -82,20 +69,4 @@ def features(y,sr):
     
     print("done with part 2")
     return [tonnetz,mfccs,chroma,mel,contrast]
-
-
-
-#fetch data from column names of 6 csv files
-for i in range(1,7):
-    csv_file_name="cluster"+str(i)+".csv"
-    df = pd.read_csv(csv_file_name)
-    songs=df.filename;
-    #will fail for cluster11.csv BEWARE
-    clusterId=csv_file_name[7]
-    for songName in songs:
-        #s.add( ("songName",clusterId) )
-        hashmap[songName]=clusterId  
-
-
-nextSongRecommendationModule(nameOfSong)
 
