@@ -59,8 +59,38 @@ def create_playlists(avg,count,user_genres,total_songs):
         playlists.append(playlist)
     return playlists
         
-playlists = create_playlists([[0.012259049,5.116299589,0.521716511,10.1420707,25.12118952]],[19],[0],19)
 
+df = pd.read_csv("user_history.csv")
+print(df)
+clusterid = df.clusterid
+f1 = df.avgf1
+f2 = df.avgf2
+f3= df.avgf3
+f4 = df.avgf4
+f5 = df.avgf5
+cnt = df.bitch
+print(cnt)
+avg = []
+songs_count = []
+total_count = 0
+user_genres = []
+for (clusterid,v1,v2,v3,v4,v5,count) in zip(clusterid,f1,f2,f3,f4,f5,cnt):
+    avg_f = []
+    avg_f.append(v1)
+    avg_f.append(v2)
+    avg_f.append(v3)
+    avg_f.append(v4)
+    avg_f.append(v5)
+    avg.append(avg_f)
+    songs_count.append(count)
+    total_count += count
+    user_genres.append(clusterid)
+playlists = create_playlists(avg,songs_count,user_genres,total_count)
+for i in playlists:
+    print(i)
+    print("___________________________________________________________________")
+    for i in range(0,5):
+        print("\n")
             
         
         
